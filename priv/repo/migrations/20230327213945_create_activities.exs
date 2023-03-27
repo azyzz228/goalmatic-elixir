@@ -4,9 +4,9 @@ defmodule GoalmaticExAs1036.Repo.Migrations.CreateActivities do
   def change do
     create table(:activities) do
       add :note, :string
-      add :amount, :integer
-      add :challenge_id, references(:challenges, on_delete: :nothing)
-      add :user_id, references(:users, on_delete: :nothing)
+      add :amount, :integer, default: 0
+      add :challenge_id, references(:challenges, on_delete: :delete_all)
+      add :user_id, references(:users, on_delete: :delete_all)
 
       timestamps()
     end
