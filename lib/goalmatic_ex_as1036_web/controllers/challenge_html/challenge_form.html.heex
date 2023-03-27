@@ -1,0 +1,13 @@
+<.simple_form :let={f} for={@changeset} action={@action}>
+  <.error :if={@changeset.action}>
+    Oops, something went wrong! Please check the errors below.
+  </.error>
+  <.input field={f[:name]} type="text" label="Name" />
+  <.input field={f[:description]} type="text" label="Description" />
+  <.input field={f[:units]} type="text" label="Units" />
+  <.input field={f[:goal]} type="number" label="Goal" />
+  <.input field={f[:ends_at]} type="datetime-local" label="Ends at" />
+  <:actions>
+    <.button>Save Challenge</.button>
+  </:actions>
+</.simple_form>

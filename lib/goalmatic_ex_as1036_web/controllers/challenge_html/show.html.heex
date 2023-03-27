@@ -1,0 +1,19 @@
+<.header>
+  Challenge <%= @challenge.id %>
+  <:subtitle>This is a challenge record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/challenges/#{@challenge}/edit"}>
+      <.button>Edit challenge</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @challenge.name %></:item>
+  <:item title="Description"><%= @challenge.description %></:item>
+  <:item title="Units"><%= @challenge.units %></:item>
+  <:item title="Goal"><%= @challenge.goal %></:item>
+  <:item title="Ends at"><%= @challenge.ends_at %></:item>
+</.list>
+
+<.back navigate={~p"/challenges"}>Back to challenges</.back>

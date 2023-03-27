@@ -1,0 +1,8 @@
+<.header>
+  Edit Challenge <%= @challenge.id %>
+  <:subtitle>Use this form to manage challenge records in your database.</:subtitle>
+</.header>
+
+<.challenge_form changeset={@changeset} action={~p"/challenges/#{@challenge}"} />
+
+<.back navigate={~p"/challenges"}>Back to challenges</.back>

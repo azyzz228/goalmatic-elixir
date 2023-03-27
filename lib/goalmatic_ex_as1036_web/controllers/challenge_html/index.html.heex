@@ -1,0 +1,27 @@
+<.header>
+  Listing Challenges
+  <:actions>
+    <.link href={~p"/challenges/new"}>
+      <.button>New Challenge</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="challenges" rows={@challenges} row_click={&JS.navigate(~p"/challenges/#{&1}")}>
+  <:col :let={challenge} label="Name"><%= challenge.name %></:col>
+  <:col :let={challenge} label="Description"><%= challenge.description %></:col>
+  <:col :let={challenge} label="Units"><%= challenge.units %></:col>
+  <:col :let={challenge} label="Goal"><%= challenge.goal %></:col>
+  <:col :let={challenge} label="Ends at"><%= challenge.ends_at %></:col>
+  <:action :let={challenge}>
+    <div class="sr-only">
+      <.link navigate={~p"/challenges/#{challenge}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/challenges/#{challenge}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={challenge}>
+    <.link href={~p"/challenges/#{challenge}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>

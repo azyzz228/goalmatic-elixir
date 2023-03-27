@@ -1,0 +1,8 @@
+<.header>
+  New Challenge
+  <:subtitle>Use this form to manage challenge records in your database.</:subtitle>
+</.header>
+
+<.challenge_form changeset={@changeset} action={~p"/challenges"} />
+
+<.back navigate={~p"/challenges"}>Back to challenges</.back>
