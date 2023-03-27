@@ -21,6 +21,9 @@ defmodule GoalmaticExAs1036Web.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    resources "/challenges", ChallengeController
+    resources "/activities", ActivityController
+
   end
 
   # Other scopes may use custom stacks.
