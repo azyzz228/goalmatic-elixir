@@ -8,7 +8,7 @@ defmodule GoalmaticExAs1036.Achievement.Challenge do
     field :goal, :integer
     field :name, :string
     field :units, :string
-    field :user_id, :id
+    belongs_to :user, GoalmaticExAs1036.Accounts.User
 
     timestamps()
   end
@@ -17,6 +17,6 @@ defmodule GoalmaticExAs1036.Achievement.Challenge do
   def changeset(challenge, attrs) do
     challenge
     |> cast(attrs, [:name, :description, :units, :goal, :ends_at])
-    |> validate_required([:name, :description, :units, :goal, :ends_at])
+    |> validate_required([:name, :goal, :ends_at])
   end
 end
