@@ -21,8 +21,6 @@ defmodule GoalmaticExAs1036Web.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    resources "/challenges", ChallengeController
-    resources "/activities", ActivityController
 
   end
 
@@ -65,6 +63,10 @@ defmodule GoalmaticExAs1036Web.Router do
 
   scope "/", GoalmaticExAs1036Web do
     pipe_through [:browser, :require_authenticated_user]
+
+    resources "/challenges", ChallengeController do
+      resources "/activities", ActivityController
+    end
 
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
