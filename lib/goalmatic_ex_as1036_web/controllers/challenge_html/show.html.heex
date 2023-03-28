@@ -1,19 +1,47 @@
 <.header>
-  Challenge <%= @challenge.id %>
-  <:subtitle>This is a challenge record from your database.</:subtitle>
+  <%= @challenge.name %>
+  <:subtitle><%= @challenge.description %></:subtitle>
   <:actions>
     <.link href={~p"/challenges/#{@challenge}/edit"}>
       <.button>Edit challenge</.button>
     </.link>
   </:actions>
 </.header>
+<div class="my-20">
+  <p class="text-zinc-500">Goal: <span class="text-zinc-700 font-bold"><%= @challenge.goal %></span> <span class="text-zinc-700"><%= @challenge.units %></span></p>
+  <p>Deadline: <%= @challenge.ends_at.month %>/<%= @challenge.ends_at.day %>/<%= @challenge.ends_at.year %></p>
+  <p>Progress: <%= @progress %></p>
+</div>
 
-<.list>
-  <:item title="Name"><%= @challenge.name %></:item>
-  <:item title="Description"><%= @challenge.description %></:item>
-  <:item title="Units"><%= @challenge.units %></:item>
-  <:item title="Goal"><%= @challenge.goal %></:item>
-  <:item title="Ends at"><%= @challenge.ends_at %></:item>
-</.list>
+<div class="my-8">
+
+  <div class="flex flex-row items-center justify-start px-4 py-4 border-b  font-medium  text-zinc-400 text-left bg-zinc-100 rounded-t-md">
+    <p class="w-1/3">Amount (<%= @challenge.units %>)</p>
+    <p class="flex-1">Notes</p>
+    <a href={"/challenges/#{@challenge.id}/activities/new"} class="bg-zinc-200 hover:bg-zinc-300 text-zinc-500 px-2 py-1 rounded-md text-sm">Add</a>
+  </div>
+
+
+
+  <%= for activity <- @activities do %>
+    <div class="flex flex-row items-center justify-start border-b border-zinc-100 py-4 hover:bg-zinc-50 px-4 rounded-md even:bg-white" >
+        <p class="w-1/3"><%= activity.amount %></p>
+        <p class=" w-1/3">
+          <%= activity.note %>
+        </p>
+        <div class="w-1/3 flex flex-row justify-end space-x-4 items-center">
+          <.link href={"/challenges/#{@challenge.id}/activities/#{activity.id}/edit"}>
+              <.icon name="hero-pencil" class="text-zinc-400 hover:text-zinc-600" />
+          </.link>
+
+          <.link href={~p"/challenges/#{@challenge.id}/activities/#{activity.id}"} method="delete" data-confirm="Are you sure?">
+            <.icon name="hero-trash" class="text-red-300 hover:text-red-600 " />
+          </.link>
+        </div>
+    </div>
+  <% end %>
+
+
+</div>
 
 <.back navigate={~p"/challenges"}>Back to challenges</.back>
