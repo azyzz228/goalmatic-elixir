@@ -4,10 +4,10 @@ defmodule GoalmaticExAs1036.Achievement do
   """
 
   import Ecto.Query, warn: false
+
   alias GoalmaticExAs1036.Repo
-
   alias GoalmaticExAs1036.Achievement.Challenge
-
+  alias GoalmaticExAs1036.Accounts.User
   @doc """
   Returns the list of challenges.
 
@@ -19,6 +19,22 @@ defmodule GoalmaticExAs1036.Achievement do
   """
   def list_challenges do
     Repo.all(Challenge)
+  end
+
+  def list_user_challenges(%User{} = user) do
+    Challenge
+    |> user_challenges_query(user)
+    |> Repo.all()
+  end
+
+  def get_user_challenge!(%User{} = user, id) do
+    Challenge
+    |> user_challenges_query(user)
+    |> Repo.get!(id)
+  end
+
+  defp user_challenges_query(query, %User{id: user_id}) do
+    from(challenge in query, where: challenge.user_id == ^user_id)
   end
 
   @doc """
@@ -49,9 +65,10 @@ defmodule GoalmaticExAs1036.Achievement do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_challenge(attrs \\ %{}) do
+  def create_challenge(%User{} = user, attrs \\ %{}) do
     %Challenge{}
     |> Challenge.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:user, user)
     |> Repo.insert()
   end
 
@@ -117,6 +134,21 @@ defmodule GoalmaticExAs1036.Achievement do
     Repo.all(Activity)
   end
 
+  def list_challenge_activities(%Challenge{} = challenge) do
+    Activity
+    |> challenge_activities_query(challenge)
+    |> Repo.all()
+  end
+
+  def get_challenge_activity!(%Challenge{} = challenge, id) do
+    Activity
+    |> challenge_activities_query(challenge)
+    |> Repo.get!(id)
+  end
+
+  defp challenge_activities_query(query, %Challenge{id: id}) do
+    from(activity in query, where: activity.challenge_id == ^id)
+  end
   @doc """
   Gets a single activity.
 
@@ -145,9 +177,11 @@ defmodule GoalmaticExAs1036.Achievement do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_activity(attrs \\ %{}) do
+  def create_activity( %Challenge{} = challenge, %User{} = user, attrs \\ %{}) do
     %Activity{}
     |> Activity.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:challenge, challenge)
+    |> Ecto.Changeset.put_assoc(:user, user)
     |> Repo.insert()
   end
 
