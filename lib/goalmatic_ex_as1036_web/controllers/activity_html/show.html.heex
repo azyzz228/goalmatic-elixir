@@ -2,7 +2,7 @@
   Activity <%= @activity.id %>
   <:subtitle>This is a activity record from your database.</:subtitle>
   <:actions>
-    <.link href={~p"/activities/#{@activity}/edit"}>
+    <.link href={~p"/challenges/#{@challenge}/activities/#{@activity}/edit"}>
       <.button>Edit activity</.button>
     </.link>
   </:actions>
@@ -13,4 +13,4 @@
   <:item title="Amount"><%= @activity.amount %></:item>
 </.list>
 
-<.back navigate={~p"/activities"}>Back to activities</.back>
+<.back navigate={~p"/challenges/#{@challenge}"}>Back to challenge</.back>

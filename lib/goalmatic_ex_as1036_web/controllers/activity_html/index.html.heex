@@ -1,23 +1,23 @@
 <.header>
   Listing Activities
   <:actions>
-    <.link href={~p"/activities/new"}>
+    <.link href={~p"/challenges/#{@challenge}/activities/new"}>
       <.button>New Activity</.button>
     </.link>
   </:actions>
 </.header>
 
-<.table id="activities" rows={@activities} row_click={&JS.navigate(~p"/activities/#{&1}")}>
+<.table id="activities" rows={@activities} row_click={&JS.navigate(~p"/challenges/#{@challenge}/activities/#{&1}")}>
   <:col :let={activity} label="Note"><%= activity.note %></:col>
   <:col :let={activity} label="Amount"><%= activity.amount %></:col>
   <:action :let={activity}>
     <div class="sr-only">
-      <.link navigate={~p"/activities/#{activity}"}>Show</.link>
+      <.link navigate={~p"/challenges/#{@challenge}/activities/#{activity}"}>Show</.link>
     </div>
-    <.link navigate={~p"/activities/#{activity}/edit"}>Edit</.link>
+    <.link navigate={~p"/challenges/#{@challenge}/activities/#{activity}/edit"}>Edit</.link>
   </:action>
   <:action :let={activity}>
-    <.link href={~p"/activities/#{activity}"} method="delete" data-confirm="Are you sure?">
+    <.link href={~p"/challenges/#{@challenge}/activities/#{activity}"} method="delete" data-confirm="Are you sure?">
       Delete
     </.link>
   </:action>

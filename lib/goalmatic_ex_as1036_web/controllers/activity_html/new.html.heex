@@ -3,6 +3,6 @@
   <:subtitle>Use this form to manage activity records in your database.</:subtitle>
 </.header>
 
-<.activity_form changeset={@changeset} action={~p"/activities"} />
+<.activity_form changeset={@changeset} action={~p"/challenges/#{@challenge}/activities"} />
 
-<.back navigate={~p"/activities"}>Back to activities</.back>
+<.back navigate={~p"/challenges/#{@challenge}"}>Back to challenge</.back>
