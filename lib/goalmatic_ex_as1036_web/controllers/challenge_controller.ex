@@ -8,7 +8,13 @@ defmodule GoalmaticExAs1036Web.ChallengeController do
     args = [conn, conn.params, conn.assigns.current_user]
     apply(__MODULE__, action_name(conn), args)
   end
-  def index(conn, _params, current_user) do
+
+  def index(conn, params, current_user) do
+    challenges = Achievement.list_user_challenges(current_user, params)
+    render(conn, :index, challenges: challenges)
+  end
+
+  def index(conn, current_user) do
     challenges = Achievement.list_user_challenges(current_user)
     render(conn, :index, challenges: challenges)
   end
