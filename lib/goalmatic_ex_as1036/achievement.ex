@@ -27,6 +27,19 @@ defmodule GoalmaticExAs1036.Achievement do
     |> Repo.all()
   end
 
+  def list_user_challenges(%User{} = user, params) do
+    search_term = get_in(params, ["search_term"])
+    Challenge
+    |> user_challenges_query(user)
+    |> challenge_search(search_term)
+    |> Repo.all()
+  end
+
+  def challenge_search(query, search_term) do
+    search = "%#{search_term}"
+    from challenge in query, where: like(challenge.name, ^search)
+  end
+
   def get_user_challenge!(%User{} = user, id) do
     Challenge
     |> user_challenges_query(user)
