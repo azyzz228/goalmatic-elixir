@@ -50,6 +50,20 @@ defmodule GoalmaticExAs1036Web.UserSettingsController do
     end
   end
 
+  def update(conn, %{"action" => "update_avatar"} = params) do
+    %{"user" => user_params} = params
+
+    case Accounts.update_user_avatar(conn.assigns.user, user_params) do
+      {:ok, _user} ->
+        conn
+        |> put_flash(:info, "Avatar updated successfully")
+        |> redirect(to: ~p"/users/settings")
+
+      {:error, changeset} ->
+        render(conn, :edit, avatar_changeset: changeset)
+    end
+  end
+
   def confirm_email(conn, %{"token" => token}) do
     case Accounts.update_user_email(conn.assigns.current_user, token) do
       :ok ->
@@ -70,5 +84,7 @@ defmodule GoalmaticExAs1036Web.UserSettingsController do
     conn
     |> assign(:email_changeset, Accounts.change_user_email(user))
     |> assign(:password_changeset, Accounts.change_user_password(user))
+    |> assign(:avatar_changeset, Accounts.change_user_avatar(user))
+    |> assign(:user, user)
   end
 end
