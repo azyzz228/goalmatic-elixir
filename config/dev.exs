@@ -1,5 +1,5 @@
 import Config
-
+import_config "dev.secrets.exs"
 # Configure your database
 config :goalmatic_ex_as1036, GoalmaticExAs1036.Repo,
   database: Path.expand("../goalmatic_ex_as1036_dev.db", Path.dirname(__ENV__.file)),
@@ -74,3 +74,13 @@ config :phoenix, :plug_init_mode, :runtime
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
+
+config :waffle,
+  storage: Waffle.Storage.S3,
+  bucket: System.get_env("AWS_BUCKET_NAME")
+
+config :ex_aws,
+  json_codec: Jason,
+  access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+  secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
+  region: System.get_env("AWS_REGION")
