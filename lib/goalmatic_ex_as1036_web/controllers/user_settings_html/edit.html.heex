@@ -60,4 +60,30 @@
       </:actions>
     </.simple_form>
   </div>
+
+  <div class="">
+    <.simple_form :let={f}
+    for={@avatar_changeset}
+    action={~p"/users/settings"}
+    id="update_avatar"
+    multipart={true}
+    >
+
+      <.error :if={@avatar_changeset.action}>
+        Oops, something went wrong! Please check the errors below.
+      </.error>
+
+      <img src={GoalmaticExAs1036.Uploaders.Avatar.url({@user.avatar, @user}, signed: true)}
+      width={100} class="w-full">
+
+      <.input field={f[:action]} type="hidden" name="action" value="update_avatar" />
+
+      <%= label f, :avatar %>
+      <%= file_input f, :avatar %>
+
+      <:actions>
+        <.button phx-disable-with="Uploading...">Upload Avatar</.button>
+      </:actions>
+    </.simple_form>
+  </div>
 </div>
