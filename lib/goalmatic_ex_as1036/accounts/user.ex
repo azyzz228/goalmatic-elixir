@@ -1,13 +1,14 @@
 defmodule GoalmaticExAs1036.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+  use Waffle.Ecto.Schema
 
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
-
+    field :avatar, GoalmaticExAs1036.Uploaders.Avatar.Type
     timestamps()
   end
 
@@ -103,6 +104,15 @@ defmodule GoalmaticExAs1036.Accounts.User do
   end
 
   @doc """
+  A user changeset for changing the avatar
+  """
+  def avatar_changeset(user, attrs) do
+    user
+    |> cast(attrs, [])
+    |> cast_attachments(attrs, [:avatar])
+  end
+
+  @doc """
   A user changeset for changing the password.
 
   ## Options
@@ -135,7 +145,10 @@ defmodule GoalmaticExAs1036.Accounts.User do
   If there is no user or the user doesn't have a password, we call
   `Bcrypt.no_user_verify/0` to avoid timing attacks.
   """
-  def valid_password?(%GoalmaticExAs1036.Accounts.User{hashed_password: hashed_password}, password)
+  def valid_password?(
+        %GoalmaticExAs1036.Accounts.User{hashed_password: hashed_password},
+        password
+      )
       when is_binary(hashed_password) and byte_size(password) > 0 do
     Bcrypt.verify_pass(password, hashed_password)
   end
