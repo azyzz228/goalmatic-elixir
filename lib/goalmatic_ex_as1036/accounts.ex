@@ -157,6 +157,16 @@ defmodule GoalmaticExAs1036.Accounts do
     |> Ecto.Multi.delete_all(:tokens, UserToken.user_and_contexts_query(user, [context]))
   end
 
+  def update_user_avatar(%User{} = user, attrs) do
+    user
+    |> User.avatar_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def change_user_avatar(%User{} = user) do
+    User.avatar_changeset(user, %{})
+  end
+
   @doc ~S"""
   Delivers the update email instructions to the given user.
 
